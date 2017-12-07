@@ -31,6 +31,16 @@ public class Character {
     public Character() {
     }
 
+    public Character(int id, String name, int age, String hometown, String gender, String race, String orientation) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.hometown = hometown;
+        this.gender = gender;
+        this.race = race;
+        this.orientation = orientation;
+    }
+
     public int getId() {
         return id;
     }

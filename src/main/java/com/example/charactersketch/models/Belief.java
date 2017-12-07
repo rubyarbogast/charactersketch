@@ -1,5 +1,8 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Belief extends InnerLife {
 
     private String political;
@@ -9,6 +12,12 @@ public class Belief extends InnerLife {
     private String aboutSelf;
 
     public Belief() {
+    }
+
+    public Belief(String political, String religious, String aboutSelf) {
+        this.political = political;
+        this.religious = religious;
+        this.aboutSelf = aboutSelf;
     }
 
     public String getPolitical() {

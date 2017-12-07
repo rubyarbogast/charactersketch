@@ -1,5 +1,7 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.List;
 
 public class PastAndFuture extends Trait {
@@ -15,6 +17,14 @@ public class PastAndFuture extends Trait {
     private String dreamJob;
 
     public PastAndFuture() {
+    }
+
+    public PastAndFuture(String education, List<String> goals, String currentJob, List<String> pastJobs, String dreamJob) {
+        this.education = education;
+        this.goals = goals;
+        this.currentJob = currentJob;
+        this.pastJobs = pastJobs;
+        this.dreamJob = dreamJob;
     }
 
     public String getEducation() {

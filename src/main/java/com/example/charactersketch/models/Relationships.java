@@ -1,5 +1,8 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class Relationships extends Trait {
 
     //some of these should be longer text type once figured out

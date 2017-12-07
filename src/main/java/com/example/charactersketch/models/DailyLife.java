@@ -1,5 +1,8 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class DailyLife extends Trait {
 
     private String schedule;
@@ -11,6 +14,13 @@ public class DailyLife extends Trait {
     private String responsibilities;
 
     public DailyLife() {
+    }
+
+    public DailyLife(String schedule, String habits, String hobbies, String responsibilities) {
+        this.schedule = schedule;
+        this.habits = habits;
+        this.hobbies = hobbies;
+        this.responsibilities = responsibilities;
     }
 
     public String getSchedule() {

@@ -1,5 +1,8 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 public class InnerLife extends Trait {
 
     private String fears;
@@ -11,6 +14,13 @@ public class InnerLife extends Trait {
     private String secretsFromSelf;
 
     public InnerLife() {
+    }
+
+    public InnerLife(String fears, String hopes, String secretsFromOthers, String secretsFromSelf) {
+        this.fears = fears;
+        this.hopes = hopes;
+        this.secretsFromOthers = secretsFromOthers;
+        this.secretsFromSelf = secretsFromSelf;
     }
 
     public String getFears() {
