@@ -1,4 +1,4 @@
 package com.example.charactersketch.models;
 
-public class Traits {
+public class Trait {
 }
