@@ -1,10 +1,12 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class User {
 
     @Id
@@ -22,8 +24,11 @@ public class User {
     public User() {
     }
 
-    public User(String username) {
+    public User(int id, String username, String email, String password) {
+        this.id = id;
         this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {

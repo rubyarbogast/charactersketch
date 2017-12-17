@@ -1,11 +1,13 @@
 package com.example.charactersketch.models;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class Character {
+@Entity
+public class Person {
 
     @Id
     @GeneratedValue
@@ -24,21 +26,11 @@ public class Character {
 
     private String orientation;
 
-    public Character(String name) {
-        this.name = name;
+    public Person() {
     }
 
-    public Character() {
-    }
-
-    public Character(int id, String name, int age, String hometown, String gender, String race, String orientation) {
-        this.id = id;
+    public Person(String name) {
         this.name = name;
-        this.age = age;
-        this.hometown = hometown;
-        this.gender = gender;
-        this.race = race;
-        this.orientation = orientation;
     }
 
     public int getId() {
