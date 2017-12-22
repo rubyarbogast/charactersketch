@@ -1,8 +1,6 @@
 package com.example.charactersketch.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -14,4 +12,7 @@ public class Project {
 
     @NotNull
     private String title;
+
+    @ManyToOne
+    private User creator;
 }

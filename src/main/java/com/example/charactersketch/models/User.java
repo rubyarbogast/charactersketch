@@ -1,10 +1,10 @@
 package com.example.charactersketch.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -19,7 +19,12 @@ public class User {
 
     private String email;
 
+    @NotNull
+    @Size(min=3, max=30)
     private String password;
+
+    @OneToMany
+    private List<Project> projects = new ArrayList<>();
 
     public User() {
     }

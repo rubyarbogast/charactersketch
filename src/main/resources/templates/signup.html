@@ -2,20 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
 </head>
 <body>
-<h1>Sign Up</h1>
+<h1 th:text="${title}">Default Title</h1>
 <form method="post" th:object="${user}">
     <div>
         <label th:for="usernameField">Username</label>
         <input th:field="*{username}" id="usernameField"/>
+        <span th:errors="*{username}" class="error"></span>
     </div>
     <div>
         <label th:for="passwordField">Password</label>
-        <input th:field="*{password}" id="passwordField"/>
+        <input th:field="*{password}" id="passwordField" type="password"/>
+        <span th:errors="*{password}" class="error"></span>
     </div>
-
     <input type="submit" value="Sign Up" />
 </form>
 </body>
