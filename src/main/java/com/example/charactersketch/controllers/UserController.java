@@ -77,4 +77,12 @@ public class UserController {
         model.addAttribute("title", "My Projects");
         return "profile";
     }
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logout(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("loggedInUser");
+        model.addAttribute("title", "Log Out");
+        return "logout";
+    }
 }

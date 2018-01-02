@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+
 <body>
-<h1>Character Sketch</h1>
+<h1 th:text="${title}">Default Title</h1>
 <nav th:replace="fragments :: navigation"></nav>
-<a href="/login">Log In</a>
-<a href="/signup">Sign Up</a>
+<div>
+    <p>You have been logged out.</p>
+    <p>To log back in, return to the <a href="/login">login page</a>.</p>
+</div>
 </body>
 </html>

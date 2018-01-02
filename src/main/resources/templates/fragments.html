@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8" />
+    <title th:text="${title}">Title</title>
+</head>
+<body>
+<nav th:fragment="navigation">
+    <a href="/login">Log In</a> |
+    <a href="/signup">Sign Up</a> |
+    <a href="/profile">My Profile</a> |
+    <a href="/logout">Log Out</a>
+</nav>
+</body>
+</html>
