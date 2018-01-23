@@ -39,9 +39,21 @@ public class UserController {
             return "signup";
         }
 
+        Iterable<User> users = userDao.findAll();
+
+        for (User user : users) {
+            if (user.getUsername().equals(newUser.getUsername())) {
+                model.addAttribute("title", "Create an Account");
+                model.addAttribute("message", "That username is already in use. " +
+                        "Please choose something else.");
+                return "signup";
+            }
+        }
+
         userDao.save(newUser);
         HttpSession session = request.getSession();
         session.setAttribute("loggedInUser", newUser);
+        response.encodeRedirectURL("/profile");
         model.addAttribute("title", "My Projects");
 
         return "redirect:/profile";

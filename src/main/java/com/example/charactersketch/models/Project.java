@@ -15,4 +15,35 @@ public class Project {
 
     @ManyToOne
     private User creator;
+
+    public Project(int id) {
+        this.id = id;
+    }
+
+    public Project() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
 }
