@@ -3,6 +3,7 @@ package com.example.charactersketch.controllers;
 import com.example.charactersketch.models.Project;
 import com.example.charactersketch.models.User;
 import com.example.charactersketch.models.data.ProjectDao;
+import com.example.charactersketch.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ import javax.validation.Valid;
 public class ProjectController {
     @Autowired
     ProjectDao projectDao;
+
+    @Autowired
+    private UserDao userDao;
 
     //allows user to create a new project
     @RequestMapping(value="project/newproject", method = RequestMethod.GET)
@@ -45,8 +49,8 @@ public class ProjectController {
             return "project/newproject";
         }
 
-        //User currentUser = (User) session.getAttribute("loggedInUser");
-        //newProject.setCreator(currentUser);
+        User currentUser = (User) session.getAttribute("loggedInUser");
+        newProject.setCreator(currentUser);
 
         //save the project to the DB
         projectDao.save(newProject);

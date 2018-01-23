@@ -24,6 +24,7 @@ public class User {
     private String password;
 
     @OneToMany
+    @JoinColumn(name = "creator_id")
     private List<Project> projects = new ArrayList<>();
 
     public User() {

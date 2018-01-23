@@ -74,7 +74,7 @@ public class UserController {
 
         if (errors.hasErrors()){
             model.addAttribute("title", "Log In");
-            return "signup";
+            return "login";
         }
 
         HttpSession session = request.getSession();
