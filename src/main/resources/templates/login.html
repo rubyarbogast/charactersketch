@@ -15,7 +15,9 @@
     <div>
         <label th:for="passwordField">Password</label>
         <input th:field="*{password}" id="passwordField" type="password"/>
-        <span th:errors="*{password}" class="error"></span>
+        <div th:if="${passwordMessage}">
+            <div th:text="${passwordMessage}"></div>
+        </div>
     </div>
     <input type="submit" value="Log In" />
 </form>

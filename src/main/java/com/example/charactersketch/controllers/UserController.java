@@ -69,17 +69,29 @@ public class UserController {
     }
 
     @RequestMapping(value="login", method = RequestMethod.POST)
-    public String processLoginForm(@ModelAttribute @Valid User returningUser, Errors errors, Model model,
+    public String processLoginForm(@ModelAttribute @Valid User returningUser, Model model,
                                    HttpServletRequest request, HttpServletResponse response){
 
-        if (errors.hasErrors()){
-            model.addAttribute("title", "Log In");
-            return "login";
-        }
+        Iterable<User> users = userDao.findAll();
 
-        HttpSession session = request.getSession();
-        session.setAttribute("loggedInUser", returningUser);
-        model.addAttribute("title", "My Projects");
+        for (User user : users) {
+            if (user.getUsername().equals(returningUser.getUsername())) {
+                if (user.getPassword().equals(returningUser.getPassword())) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedInUser", user);
+                    model.addAttribute("title", "My Projects");
+                    response.encodeRedirectURL("profile");
+                    return "redirect:/profile";
+
+                } else {
+                    //return login page with password error
+                    model.addAttribute("title", "Log In");
+                    model.addAttribute("passwordMessage",
+                            "Username and password not found. Please try again.");
+                    return "login";
+                }
+            }
+        }
 
         return "redirect:/profile";
     }
