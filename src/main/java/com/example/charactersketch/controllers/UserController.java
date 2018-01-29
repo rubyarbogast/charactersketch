@@ -1,6 +1,8 @@
 package com.example.charactersketch.controllers;
 
+import com.example.charactersketch.models.Project;
 import com.example.charactersketch.models.User;
+import com.example.charactersketch.models.data.ProjectDao;
 import com.example.charactersketch.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    ProjectDao projectDao;
 
     @RequestMapping(value="signup", method = RequestMethod.GET)
     public String displaySignupForm(Model model){
@@ -97,8 +104,31 @@ public class UserController {
     }
 
     @RequestMapping(value="profile", method = RequestMethod.GET)
-    public String displayProfile(Model model){
+    public String displayProfile(Model model, HttpSession session){
+
+        //if there's no user logged in, redirect to login page
+        if (session.getAttribute("loggedInUser") == null){
+            return "redirect:/login";
+        }
+
+        //identify which user is logged in
+        User currentUser = (User) session.getAttribute("loggedInUser");
+        User user = userDao.findOne(currentUser.getId());
+
+        List<Project> userProjects = new ArrayList<>();
+        Iterable<Project> projects = projectDao.findAll();
+
+        for (Project project : projects){
+            System.out.println(project.getCreator());
+            System.out.println(user);
+            if (project.getCreator() == user){
+                userProjects.add(project);
+            }
+        }
+
+        model.addAttribute("projects", userProjects);
         model.addAttribute("title", "My Projects");
+
         return "profile";
     }
 

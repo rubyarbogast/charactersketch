@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -60,6 +61,23 @@ public class ProjectController {
     }
 
     //allows users to view an existing project
+    @RequestMapping(value="project/view/{projectId}", method=RequestMethod.POST)
+    public String viewProject(Model model, @PathVariable int projectId, HttpSession session){
 
-    //allows users to edit an existing project
+        //ensure that the user is logged in
+        User currentUser = (User) session.getAttribute("loggedInUser");
+        User user = userDao.findOne(currentUser.getId());
+
+        if (user != currentUser){
+            return "redirect:/login";
+        }
+
+        Project projectToView = projectDao.findOne(projectId);
+        model.addAttribute("title", projectToView.getTitle());
+        model.addAttribute("project", projectToView);
+
+        return "project/view";
+    }
+
+    //allows users to add a character
 }

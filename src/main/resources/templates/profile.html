@@ -4,5 +4,8 @@
 <body>
 <h1 th:text="${title}">Default Title</h1>
 <nav th:replace="fragments :: navigation"></nav>
+<div th:each="project : ${projects}">
+        <p th:text="${project.title}">Project Title</p>
+</div>
 </body>
 </html>

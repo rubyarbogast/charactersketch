@@ -2,6 +2,8 @@ package com.example.charactersketch.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -15,6 +17,9 @@ public class Project {
 
     @ManyToOne
     private User creator;
+
+    @OneToMany
+    private List<Person> persons = new ArrayList<>();
 
     public Project(int id) {
         this.id = id;
@@ -45,5 +50,13 @@ public class Project {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 }

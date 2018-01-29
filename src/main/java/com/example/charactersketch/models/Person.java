@@ -3,6 +3,7 @@ package com.example.charactersketch.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -15,6 +16,9 @@ public class Person {
 
     @NotNull
     private String name;
+
+    @ManyToOne
+    private Project project;
 
     private int age;
 
@@ -87,5 +91,13 @@ public class Person {
 
     public void setOrientation(String orientation) {
         this.orientation = orientation;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }
