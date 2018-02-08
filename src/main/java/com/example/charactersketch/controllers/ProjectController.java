@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("project")
 public class ProjectController {
     @Autowired
     ProjectDao projectDao;
@@ -30,7 +31,7 @@ public class ProjectController {
     private PersonDao personDao;
 
     //allows user to create a new project
-    @RequestMapping(value="project/newproject", method = RequestMethod.GET)
+    @RequestMapping(value="newproject", method = RequestMethod.GET)
     public String displayProjectPage(Model model, HttpSession session){
 
         //require user to be logged in
@@ -45,7 +46,7 @@ public class ProjectController {
     }
 
     //allows user to save their project
-    @RequestMapping(value="project/newproject", method = RequestMethod.POST)
+    @RequestMapping(value="newproject", method = RequestMethod.POST)
     public String processProjectPage(@ModelAttribute @Valid Project newProject, Errors errors, Model model,
                                      HttpSession session){
 
@@ -66,7 +67,7 @@ public class ProjectController {
     }
 
     //allows users to view an existing project
-    @RequestMapping(value="project/view/{projectId}", method=RequestMethod.GET)
+    @RequestMapping(value="view/{projectId}", method=RequestMethod.GET)
     public String viewProject(Model model, @PathVariable int projectId, HttpSession session){
 
         //if user is not in session, redirect to login
@@ -83,7 +84,7 @@ public class ProjectController {
     }
 
     //allows users to add a character to a project
-    @RequestMapping(value="project/newChar/{projectId}", method=RequestMethod.GET)
+    @RequestMapping(value="newChar/{projectId}", method=RequestMethod.GET)
     public String viewAddCharacter(Model model, @PathVariable int projectId){
 
         model.addAttribute(new Person());
@@ -92,7 +93,7 @@ public class ProjectController {
         return "project/newChar";
     }
 
-    @RequestMapping(value="project/newChar/{projectId}", method=RequestMethod.POST)
+    @RequestMapping(value="newChar/{projectId}", method=RequestMethod.POST)
     public String processAddCharacter(@ModelAttribute @Valid Person person, Errors errors, Model model,
                                       @PathVariable int projectId){
 
@@ -102,7 +103,10 @@ public class ProjectController {
             return "project/newChar/{projectId}";
         }
 
+        Project projectToEdit = projectDao.findOne(projectId);
+        person.setProject(projectToEdit);
+
         personDao.save(person);
-        return "project/view/{projectId}";
+        return "redirect:/project/view/{projectId}";
     }
 }
