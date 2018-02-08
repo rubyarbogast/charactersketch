@@ -1,7 +1,9 @@
 package com.example.charactersketch.controllers;
 
+import com.example.charactersketch.models.Person;
 import com.example.charactersketch.models.Project;
 import com.example.charactersketch.models.User;
+import com.example.charactersketch.models.data.PersonDao;
 import com.example.charactersketch.models.data.ProjectDao;
 import com.example.charactersketch.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class ProjectController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private PersonDao personDao;
 
     //allows user to create a new project
     @RequestMapping(value="project/newproject", method = RequestMethod.GET)
@@ -61,16 +66,14 @@ public class ProjectController {
     }
 
     //allows users to view an existing project
-    @RequestMapping(value="project/view/{projectId}", method=RequestMethod.POST)
+    @RequestMapping(value="project/view/{projectId}", method=RequestMethod.GET)
     public String viewProject(Model model, @PathVariable int projectId, HttpSession session){
 
-        //ensure that the user is logged in
-        User currentUser = (User) session.getAttribute("loggedInUser");
-        User user = userDao.findOne(currentUser.getId());
-
-        if (user != currentUser){
+        //if user is not in session, redirect to login
+        if (session.getAttribute("loggedInUser") == null){
             return "redirect:/login";
         }
+        //ensure that the user is logged in
 
         Project projectToView = projectDao.findOne(projectId);
         model.addAttribute("title", projectToView.getTitle());
@@ -79,5 +82,27 @@ public class ProjectController {
         return "project/view";
     }
 
-    //allows users to add a character
+    //allows users to add a character to a project
+    @RequestMapping(value="project/newChar/{projectId}", method=RequestMethod.GET)
+    public String viewAddCharacter(Model model, @PathVariable int projectId){
+
+        model.addAttribute(new Person());
+        model.addAttribute("title", "Add a New Character");
+
+        return "project/newChar";
+    }
+
+    @RequestMapping(value="project/newChar/{projectId}", method=RequestMethod.POST)
+    public String processAddCharacter(@ModelAttribute @Valid Person person, Errors errors, Model model,
+                                      @PathVariable int projectId){
+
+        if (errors.hasErrors()){
+            model.addAttribute(new Person());
+            model.addAttribute("title", "Add a New Character");
+            return "project/newChar/{projectId}";
+        }
+
+        personDao.save(person);
+        return "project/view/{projectId}";
+    }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
+<form method="post" th:object="${person}">
+    <div>
+        <label th:for="name">Name</label>
+        <input th:field="*{name}" />
+    </div>
+    <div>
+        <label th:for="age">Age</label>
+        <input th:field="*{age}" />
+    </div>
+    <div>
+        <label th:for="residence">Current place of residence</label>
+        <input th:field="*{residence}" />
+    </div>
+    <div>
+        <label th:for="gender">Gender</label>
+        <input th:field="*{gender}" />
+    </div>
+    <div>
+        <label th:for="race">Race and/or ethnicity</label>
+        <input th:field="*{race}" />
+    </div>
+    <div>
+        <label th:for="orientation">Sexual and/or romantic orientation</label>
+        <input th:field="*{orientation}" />
+    </div>
+
+    <input type="submit" value="Create Character" />
+</form>
+</body>
+</html>

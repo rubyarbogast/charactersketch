@@ -22,7 +22,7 @@ public class Person {
 
     private int age;
 
-    private String hometown;
+    private String residence;
 
     private String gender;
 
@@ -61,12 +61,12 @@ public class Person {
         this.age = age;
     }
 
-    public String getHometown() {
-        return hometown;
+    public String getResidence() {
+        return residence;
     }
 
-    public void setHometown(String hometown) {
-        this.hometown = hometown;
+    public void setResidence(String residence) {
+        this.residence = residence;
     }
 
     public String getGender() {
