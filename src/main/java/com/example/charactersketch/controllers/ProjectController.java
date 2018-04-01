@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("project")
@@ -74,9 +76,14 @@ public class ProjectController {
         if (session.getAttribute("loggedInUser") == null){
             return "redirect:/login";
         }
-        //ensure that the user is logged in
+        //TODO: ensure that the user is logged in
 
+        //identify the project to view
         Project projectToView = projectDao.findOne(projectId);
+
+        //TODO: add link to add a new character
+
+        System.out.println(projectToView.getPersons());
         model.addAttribute("title", projectToView.getTitle());
         model.addAttribute("project", projectToView);
 
@@ -104,9 +111,25 @@ public class ProjectController {
         }
 
         Project projectToEdit = projectDao.findOne(projectId);
-        person.setProject(projectToEdit);
 
+        //save the new character
+        person.setProject(projectToEdit);
         personDao.save(person);
+
+        //get a list of the current characters and add the new character to the list
+        List<Person> projectCharacters = projectToEdit.getPersons();
+        projectCharacters.add(person);
+
+        //save the updated list
+        projectToEdit.setPersons(projectCharacters);
+        projectDao.save(projectToEdit);
+
+        //TODO: Display character name in view
+
         return "redirect:/project/view/{projectId}";
     }
+
+    //allows users to view an existing character
+
+
 }

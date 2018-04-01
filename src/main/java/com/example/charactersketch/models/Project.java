@@ -19,7 +19,7 @@ public class Project {
     private User creator;
 
     @OneToMany
-    private List<Person> persons = new ArrayList<>();
+    private List<Person> persons;
 
     public Project(int id) {
         this.id = id;
