@@ -81,8 +81,6 @@ public class ProjectController {
         //identify the project to view
         Project projectToView = projectDao.findOne(projectId);
 
-        //TODO: add link to add a new character
-
         System.out.println(projectToView.getPersons());
         model.addAttribute("title", projectToView.getTitle());
         model.addAttribute("project", projectToView);
@@ -90,17 +88,18 @@ public class ProjectController {
         return "project/view";
     }
 
+    //uncomment: select text and Ctrl+shift+/
     //allows users to add a character to a project
-    @RequestMapping(value="newChar/{projectId}", method=RequestMethod.GET)
+  /*  @RequestMapping(value="newChar/{projectId}", method=RequestMethod.GET)
     public String viewAddCharacter(Model model, @PathVariable int projectId){
 
         model.addAttribute(new Person());
         model.addAttribute("title", "Add a New Character");
 
         return "project/newChar";
-    }
+    }*/
 
-    @RequestMapping(value="newChar/{projectId}", method=RequestMethod.POST)
+ /*   @RequestMapping(value="newChar/{projectId}", method=RequestMethod.POST)
     public String processAddCharacter(@ModelAttribute @Valid Person person, Errors errors, Model model,
                                       @PathVariable int projectId){
 
@@ -110,24 +109,24 @@ public class ProjectController {
             return "project/newChar/{projectId}";
         }
 
-        Project projectToEdit = projectDao.findOne(projectId);
+        Project projectToEdit = projectDao.findOne(projectId);*/
 
         //save the new character
-        person.setProject(projectToEdit);
-        personDao.save(person);
+/*        person.setProject(projectToEdit);
+        personDao.save(person);*/
 
         //get a list of the current characters and add the new character to the list
-        List<Person> projectCharacters = projectToEdit.getPersons();
-        projectCharacters.add(person);
+/*        List<Person> projectCharacters = projectToEdit.getPersons();
+        projectCharacters.add(person);*/
 
         //save the updated list
-        projectToEdit.setPersons(projectCharacters);
+/*        projectToEdit.setPersons(projectCharacters);
         projectDao.save(projectToEdit);
 
         //TODO: Display character name in view
 
         return "redirect:/project/view/{projectId}";
-    }
+    }*/
 
     //allows users to view an existing character
 
