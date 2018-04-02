@@ -34,6 +34,8 @@ public class PersonController {
     @RequestMapping(value="newchar/{projectId}", method= RequestMethod.GET)
     public String viewAddCharacter(Model model, @PathVariable int projectId){
 
+        //TODO: ensure user is project creator
+
         model.addAttribute(new Person());
         model.addAttribute("title", "Add a New Character");
 
@@ -64,10 +66,23 @@ public class PersonController {
         projectToEdit.setPersons(projectCharacters);
         projectDao.save(projectToEdit);
 
-        //TODO: Display character name in view
-
         return "redirect:/project/view/{projectId}";
     }
 
     //allows users to view an existing character
+    @RequestMapping(value="viewchar/{personId}", method=RequestMethod.GET)
+    public String viewCharacter(Model model, @PathVariable int personId){
+
+        //make sure user is logged in and the character is one they created
+
+        //use the path variable and PersonDao to find the character the user wants to view
+        Person personToView = personDao.findOne(personId);
+
+        //pass the character to the view
+        model.addAttribute("title", "Character Sketch");
+        model.addAttribute("person", personToView);
+
+        return "character/viewchar";
+    }
+
 }
