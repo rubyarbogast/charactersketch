@@ -66,8 +66,6 @@ public class PersonController {
         projectToEdit.setPersons(projectCharacters);
         projectDao.save(projectToEdit);
 
-        //TODO: Display character name in view
-
         return "redirect:/project/view/{projectId}";
     }
 
@@ -75,7 +73,7 @@ public class PersonController {
     @RequestMapping(value="viewchar/{personId}", method=RequestMethod.GET)
     public String viewCharacter(Model model, @PathVariable int personId){
 
-        //make sure user is logged in and the character is one they created
+        //TODO: make sure user is logged in and the character is one they created
 
         //use the path variable and PersonDao to find the character the user wants to view
         Person personToView = personDao.findOne(personId);

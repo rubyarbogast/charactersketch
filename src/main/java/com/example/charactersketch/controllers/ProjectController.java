@@ -71,18 +71,21 @@ public class ProjectController {
 
     //allows users to view an existing project
     @RequestMapping(value="view/{projectId}", method=RequestMethod.GET)
-    public String viewProject(Model model, @PathVariable int projectId, HttpSession session){
+    public String viewProject(Model model, @PathVariable("projectId") int projectId, HttpSession session){
 
+        System.out.println(projectId);
         //if user is not in session, redirect to login
-        if (session.getAttribute("loggedInUser") == null){
+        if (Helpers.userNotLoggedIn(session)){
             return "redirect:/login";
         }
-        //TODO: ensure that the user is logged in
 
-        //identify the project to view
+        //get the project to view
         Project projectToView = projectDao.findOne(projectId);
 
-        System.out.println(projectToView.getPersons());
+        if (!(Helpers.isCorrectUser(session, projectToView))){
+            return "redirect:/login";
+        }
+
         model.addAttribute("title", projectToView.getTitle());
         model.addAttribute("project", projectToView);
 
