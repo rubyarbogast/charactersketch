@@ -6,6 +6,7 @@ import com.example.charactersketch.models.User;
 import com.example.charactersketch.models.data.PersonDao;
 import com.example.charactersketch.models.data.ProjectDao;
 import com.example.charactersketch.models.data.UserDao;
+import com.example.charactersketch.helpers.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +38,7 @@ public class ProjectController {
     public String displayProjectPage(Model model, HttpSession session){
 
         //require user to be logged in
-        if (session.getAttribute("loggedInUser") == null){
+        if (Helpers.userNotLoggedIn(session)){
             return "redirect:/login";
         }
 

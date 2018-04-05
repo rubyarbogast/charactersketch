@@ -64,10 +64,10 @@ public class PersonController {
         projectToEdit.setPersons(projectCharacters);
         projectDao.save(projectToEdit);
 
-        //TODO: Display character name in view
-
         return "redirect:/project/view/{projectId}";
     }
 
-    //allows users to view an existing character
+    //TODO: allow users to view an existing character
+
+    //TODO: allow users to edit an existing character
 }
