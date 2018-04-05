@@ -89,47 +89,4 @@ public class ProjectController {
         return "project/view";
     }
 
-    //uncomment: select text and Ctrl+shift+/
-    //allows users to add a character to a project
-  /*  @RequestMapping(value="newChar/{projectId}", method=RequestMethod.GET)
-    public String viewAddCharacter(Model model, @PathVariable int projectId){
-
-        model.addAttribute(new Person());
-        model.addAttribute("title", "Add a New Character");
-
-        return "project/newChar";
-    }*/
-
- /*   @RequestMapping(value="newChar/{projectId}", method=RequestMethod.POST)
-    public String processAddCharacter(@ModelAttribute @Valid Person person, Errors errors, Model model,
-                                      @PathVariable int projectId){
-
-        if (errors.hasErrors()){
-            model.addAttribute(new Person());
-            model.addAttribute("title", "Add a New Character");
-            return "project/newChar/{projectId}";
-        }
-
-        Project projectToEdit = projectDao.findOne(projectId);*/
-
-        //save the new character
-/*        person.setProject(projectToEdit);
-        personDao.save(person);*/
-
-        //get a list of the current characters and add the new character to the list
-/*        List<Person> projectCharacters = projectToEdit.getPersons();
-        projectCharacters.add(person);*/
-
-        //save the updated list
-/*        projectToEdit.setPersons(projectCharacters);
-        projectDao.save(projectToEdit);
-
-        //TODO: Display character name in view
-
-        return "redirect:/project/view/{projectId}";
-    }*/
-
-    //allows users to view an existing character
-
-
 }

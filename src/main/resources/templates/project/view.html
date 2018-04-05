@@ -15,7 +15,7 @@
 
     <div th:if="*{!persons.empty}">
     <div th:each="person : *{persons}">
-        <a th:href="@{'/character/' + ${person.id}}">
+        <a th:href="@{'/character/viewchar/' + ${person.id}}">
             <p th:text="${person.name}">Person Name</p>
         </a>
     </div>

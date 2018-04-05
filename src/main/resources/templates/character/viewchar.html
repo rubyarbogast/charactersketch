@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
+
+<div th:object="${person}">
+    <h2 th:text="*{name}">Person Name</h2>
+    <p>Age: <span th:text="*{age}"></span></p>
+    <p>Current place of residence: <span th:text="*{residence}"></span></p>
+    <p>Gender: <span th:text="*{gender}"></span></p>
+    <p>Race and/or ethnicity: <span th:text="*{race}"></span></p>
+    <p>Sexual and/or romantic orientation: <span th:text="*{orientation}"></span></p>
+</div>
+
+</body>
+</html>
