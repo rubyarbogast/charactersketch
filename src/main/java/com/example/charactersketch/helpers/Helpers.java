@@ -1,5 +1,6 @@
 package com.example.charactersketch.helpers;
 
+import com.example.charactersketch.models.Person;
 import com.example.charactersketch.models.Project;
 import com.example.charactersketch.models.User;
 import com.example.charactersketch.models.data.ProjectDao;
@@ -19,7 +20,8 @@ public class Helpers {
         return false;
     }
 
-    public static boolean isCorrectUser(HttpSession session, Project projectToView){
+    //verifies that a user attempting to view a project created that project
+    public static boolean isProjectCreator(HttpSession session, Project projectToView){
 
         //check to see if a user is logged in
         if(userNotLoggedIn(session)){

@@ -73,7 +73,6 @@ public class ProjectController {
     @RequestMapping(value="view/{projectId}", method=RequestMethod.GET)
     public String viewProject(Model model, @PathVariable("projectId") int projectId, HttpSession session){
 
-        System.out.println(projectId);
         //if user is not in session, redirect to login
         if (Helpers.userNotLoggedIn(session)){
             return "redirect:/login";
@@ -82,7 +81,7 @@ public class ProjectController {
         //get the project to view
         Project projectToView = projectDao.findOne(projectId);
 
-        if (!(Helpers.isCorrectUser(session, projectToView))){
+        if (!(Helpers.isProjectCreator(session, projectToView))){
             return "redirect:/login";
         }
 

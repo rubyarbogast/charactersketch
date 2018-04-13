@@ -1,5 +1,6 @@
 package com.example.charactersketch.controllers;
 
+import com.example.charactersketch.helpers.Helpers;
 import com.example.charactersketch.models.Person;
 import com.example.charactersketch.models.Project;
 import com.example.charactersketch.models.data.PersonDao;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,9 +34,18 @@ public class PersonController {
 
     //allows users to add a character to a project
     @RequestMapping(value="newchar/{projectId}", method= RequestMethod.GET)
-    public String viewAddCharacter(Model model, @PathVariable int projectId){
+    public String viewAddCharacter(Model model, @PathVariable("projectId") int projectId, HttpSession session){
 
-        //TODO: ensure user is project creator
+        //ensure user is logged in
+        if (Helpers.userNotLoggedIn(session)){
+            return "redirect:/login";
+        }
+
+        //ensure current user created this project
+        Project projectToView = projectDao.findOne(projectId);
+        if (!(Helpers.isProjectCreator(session, projectToView))){
+            return "redirect:/login";
+        }
 
         model.addAttribute(new Person());
         model.addAttribute("title", "Add a New Character");
@@ -44,7 +55,7 @@ public class PersonController {
 
     @RequestMapping(value="newchar/{projectId}", method=RequestMethod.POST)
     public String processAddCharacter(@ModelAttribute @Valid Person person, Errors errors, Model model,
-                                      @PathVariable int projectId){
+                                      @PathVariable int projectId, HttpSession session){
 
         if (errors.hasErrors()){
             model.addAttribute(new Person());
