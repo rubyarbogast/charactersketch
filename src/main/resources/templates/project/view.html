@@ -5,7 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-<div>
+<h1 th:text="${title}">Default Title</h1>
+<div th:object="${project}">
+    <h2>Characters</h2>
+
+    <a th:href="@{'/character/newchar/' + ${project.id}}">Add a Character</a>
+
+    <div th:if="*{persons.empty}">No characters yet.</div>
+
+    <div th:if="*{!persons.empty}">
+    <div th:each="person : *{persons}">
+        <a th:href="@{'/character/viewchar/' + ${person.id}}">
+            <p th:text="${person.name}">Person Name</p>
+        </a>
+    </div>
+    </div>
+
 </div>
 </body>
 </html>

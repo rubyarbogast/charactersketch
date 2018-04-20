@@ -4,8 +4,13 @@
 <body>
 <h1 th:text="${title}">Default Title</h1>
 <nav th:replace="fragments :: navigation"></nav>
+<div>
+    <a href="/project/newproject/">Create a New Project</a>
+</div>
 <div th:each="project : ${projects}">
+    <a th:href="@{'/project/view/' + ${project.id}}">
         <p th:text="${project.title}">Project Title</p>
+    </a>
 </div>
 </body>
 </html>

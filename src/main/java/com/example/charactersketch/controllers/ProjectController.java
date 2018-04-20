@@ -1,9 +1,12 @@
 package com.example.charactersketch.controllers;
 
+import com.example.charactersketch.models.Person;
 import com.example.charactersketch.models.Project;
 import com.example.charactersketch.models.User;
+import com.example.charactersketch.models.data.PersonDao;
 import com.example.charactersketch.models.data.ProjectDao;
 import com.example.charactersketch.models.data.UserDao;
+import com.example.charactersketch.helpers.Helpers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
+@RequestMapping("project")
 public class ProjectController {
     @Autowired
     ProjectDao projectDao;
@@ -24,12 +30,15 @@ public class ProjectController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private PersonDao personDao;
+
     //allows user to create a new project
-    @RequestMapping(value="project/newproject", method = RequestMethod.GET)
+    @RequestMapping(value="newproject", method = RequestMethod.GET)
     public String displayProjectPage(Model model, HttpSession session){
 
         //require user to be logged in
-        if (session.getAttribute("loggedInUser") == null){
+        if (Helpers.userNotLoggedIn(session)){
             return "redirect:/login";
         }
 
@@ -40,7 +49,7 @@ public class ProjectController {
     }
 
     //allows user to save their project
-    @RequestMapping(value="project/newproject", method = RequestMethod.POST)
+    @RequestMapping(value="newproject", method = RequestMethod.POST)
     public String processProjectPage(@ModelAttribute @Valid Project newProject, Errors errors, Model model,
                                      HttpSession session){
 
@@ -61,23 +70,25 @@ public class ProjectController {
     }
 
     //allows users to view an existing project
-    @RequestMapping(value="project/view/{projectId}", method=RequestMethod.POST)
-    public String viewProject(Model model, @PathVariable int projectId, HttpSession session){
+    @RequestMapping(value="view/{projectId}", method=RequestMethod.GET)
+    public String viewProject(Model model, @PathVariable("projectId") int projectId, HttpSession session){
 
-        //ensure that the user is logged in
-        User currentUser = (User) session.getAttribute("loggedInUser");
-        User user = userDao.findOne(currentUser.getId());
-
-        if (user != currentUser){
+        //if user is not in session, redirect to login
+        if (Helpers.userNotLoggedIn(session)){
             return "redirect:/login";
         }
 
+        //get the project to view
         Project projectToView = projectDao.findOne(projectId);
+
+        if (!(Helpers.isProjectCreator(session, projectToView))){
+            return "redirect:/login";
+        }
+
         model.addAttribute("title", projectToView.getTitle());
         model.addAttribute("project", projectToView);
 
         return "project/view";
     }
 
-    //allows users to add a character
 }

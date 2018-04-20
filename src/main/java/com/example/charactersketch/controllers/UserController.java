@@ -119,8 +119,6 @@ public class UserController {
         Iterable<Project> projects = projectDao.findAll();
 
         for (Project project : projects){
-            System.out.println(project.getCreator());
-            System.out.println(user);
             if (project.getCreator() == user){
                 userProjects.add(project);
             }
