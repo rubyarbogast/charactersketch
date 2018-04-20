@@ -55,7 +55,7 @@ public class PersonController {
 
     @RequestMapping(value="newchar/{projectId}", method=RequestMethod.POST)
     public String processAddCharacter(@ModelAttribute @Valid Person person, Errors errors, Model model,
-                                      @PathVariable int projectId, HttpSession session){
+                                      @PathVariable int projectId){
 
         if (errors.hasErrors()){
             model.addAttribute(new Person());
@@ -82,12 +82,20 @@ public class PersonController {
 
     //allows users to view an existing character
     @RequestMapping(value="viewchar/{personId}", method=RequestMethod.GET)
-    public String viewCharacter(Model model, @PathVariable int personId){
+    public String viewCharacter(Model model, @PathVariable int personId, HttpSession session){
 
-        //TODO: make sure user is logged in and the character is one they created
+        if (Helpers.userNotLoggedIn(session)){
+            return "redirect:/login";
+        }
 
-        //use the path variable and PersonDao to find the character the user wants to view
+        //ensure current user created this project
+        //find the ID of the project the character belongs to
         Person personToView = personDao.findOne(personId);
+        Project project = personToView.getProject();
+
+        if (!(Helpers.isProjectCreator(session, project))){
+            return "redirect:/login";
+        }
 
         //pass the character to the view
         model.addAttribute("title", "Character Sketch");
